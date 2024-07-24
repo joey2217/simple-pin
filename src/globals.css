@@ -1,0 +1,178 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+:root {
+  --fallback-title-bar-height: 40px;
+}
+
+.draggable {
+  -webkit-app-region: drag;
+}
+
+.nonDraggable {
+  -webkit-app-region: no-drag;
+}
+
+.titleBarContainer {
+  position: fixed;
+  top: env(titlebar-area-y, 0);
+  height: env(titlebar-area-height, var(--fallback-title-bar-height));
+  width: 100%;
+  cursor: pointer;
+  z-index: 9;
+  box-sizing: content-box;
+}
+
+.titleBar {
+  position: absolute;
+  top: 0;
+  display: flex;
+  height: 100%;
+  left: env(titlebar-area-x, 0);
+  width: env(titlebar-area-width, 100%);
+  text-align: center;
+}
+
+.titleBar-left {
+  left: env(titlebar-area-x, 0);
+}
+
+#logo {
+  width: calc(11rem - env(titlebar-area-x, 0));
+}
+
+.titleBar-top {
+  top: env(titlebar-area-height, var(--fallback-title-bar-height));
+}
+.titleBar-width {
+  width: env(titlebar-area-width, 100%);
+}
+
+#main {
+  height: calc(
+    100vh - env(titlebar-area-height, var(--fallback-title-bar-height))
+  );
+  margin-top: env(titlebar-area-height, var(--fallback-title-bar-height));
+  overflow: hidden;
+}
+
+#content {
+  @apply h-full overflow-auto;
+}
+
+.titleBar-ml {
+  margin-left: env(titlebar-area-x, 0);
+}
+.titleBar-mr {
+  margin-right: env(titlebar-area-x, 0);
+}
+
+a,
+button,
+input {
+  @apply focus-within:outline-none;
+}
+
+.nav-link {
+  @apply h-9 px-4 py-2 inline-flex items-center justify-start whitespace-nowrap rounded-md
+   text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 
+   focus-visible:ring-ring hover:bg-accent hover:text-accent-foreground;
+}
+
+.nav-link.active {
+  @apply bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80;
+}
+
+.link {
+  @apply text-accent-foreground underline-offset-4 hover:underline;
+}
+
+/* 滚动条整体 */
+.scrollbar::-webkit-scrollbar {
+  @apply w-2.5 h-2.5;
+}
+/* 两个滚动条交接处 -- x轴和y轴 */
+.scrollbar::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+/* 滚动条滑块 */
+.scrollbar::-webkit-scrollbar-thumb {
+  @apply rounded shadow-xl bg-secondary-foreground/50;
+}
+
+/* 滚动条轨道 */
+.scrollbar::-webkit-scrollbar-track {
+  @apply rounded shadow-xl bg-secondary;
+}
+
+button:disabled {
+  @apply pointer-events-none opacity-50;
+}

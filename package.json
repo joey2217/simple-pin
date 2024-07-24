@@ -1,0 +1,68 @@
+{
+  "name": "simple-notes",
+  "version": "0.0.1",
+  "private": true,
+  "description": "simple notes",
+  "main": "dist/main.mjs",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "publish": "npm run build && electron-builder build -c electron-builder.config.cjs -p always",
+    "package": "npm run build && electron-builder build -c electron-builder.config.cjs",
+    "dev": "node scripts/dev.mjs",
+    "dev:renderer": "vite -c vite.config.ts",
+    "build": "vite build -c vite.preload.config.ts && vite build -c vite.main.config.ts && vite build -c vite.config.ts",
+    "prebuild": "npm run check",
+    "check": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.json",
+    "test": "vitest",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joey2217/simple-notes.git"
+  },
+  "keywords": [
+    "notes"
+  ],
+  "author": "Joey",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joey2217/simple-notes/issues"
+  },
+  "homepage": "https://github.com/joey2217/simple-notes#readme",
+  "dependencies": {
+    "@radix-ui/react-dropdown-menu": "^2.1.1",
+    "@radix-ui/react-slot": "^1.1.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "electron-log": "^5.1.7",
+    "electron-updater": "^6.2.1",
+    "lucide-react": "^0.414.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.25.1",
+    "tailwind-merge": "^2.4.0",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.12",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^7.17.0",
+    "@typescript-eslint/parser": "^7.17.0",
+    "@vitejs/plugin-react-swc": "^3.7.0",
+    "autoprefixer": "^10.4.19",
+    "electron": "^31.2.1",
+    "electron-builder": "^24.13.3",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.9",
+    "postcss": "^8.4.39",
+    "tailwindcss": "^3.4.6",
+    "typescript": "^5.5.4",
+    "vite": "^5.3.4",
+    "vitest": "^2.0.4"
+  }
+}
