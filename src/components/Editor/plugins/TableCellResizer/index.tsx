@@ -27,7 +27,6 @@ import {
 } from '@lexical/table';
 import {calculateZoomLevel} from '@lexical/utils';
 import {$getNearestNodeFromDOMNode} from 'lexical';
-import * as React from 'react';
 import {
   MouseEventHandler,
   ReactPortal,
@@ -122,13 +121,13 @@ function TableCellResizer({editor}: {editor: LexicalEditor}): JSX.Element {
       }, 0);
     };
 
-    const onMouseDown = (event: MouseEvent) => {
+    const onMouseDown = (_event: MouseEvent) => {
       setTimeout(() => {
         updateIsMouseDown(true);
       }, 0);
     };
 
-    const onMouseUp = (event: MouseEvent) => {
+    const onMouseUp = (_event: MouseEvent) => {
       setTimeout(() => {
         updateIsMouseDown(false);
       }, 0);

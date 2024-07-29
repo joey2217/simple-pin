@@ -20,10 +20,6 @@ interface MessageAPI {
   onNavigate: (callback: (to: string) => void) => RemoveListener
 }
 
-interface IDevAPI {
-  toggleDevtools: () => Promise<void>
-}
-
 interface Argv {
   node: string
   chrome: string

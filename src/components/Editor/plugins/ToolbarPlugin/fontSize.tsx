@@ -6,15 +6,16 @@
  *
  */
 
-import './fontSize.css';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
+import './fontSize.css'
 
-import {$patchStyleText} from '@lexical/selection';
-import {$getSelection, LexicalEditor} from 'lexical';
-import * as React from 'react';
+import { $patchStyleText } from '@lexical/selection'
+import { $getSelection } from 'lexical'
+import * as React from 'react'
 
-const MIN_ALLOWED_FONT_SIZE = 8;
-const MAX_ALLOWED_FONT_SIZE = 72;
-const DEFAULT_FONT_SIZE = 15;
+const MIN_ALLOWED_FONT_SIZE = 8
+const MAX_ALLOWED_FONT_SIZE = 72
+const DEFAULT_FONT_SIZE = 15
 
 // eslint-disable-next-line no-shadow
 enum updateFontSizeType {
@@ -25,14 +26,14 @@ enum updateFontSizeType {
 export default function FontSize({
   selectionFontSize,
   disabled,
-  editor,
 }: {
-  selectionFontSize: string;
-  disabled: boolean;
-  editor: LexicalEditor;
+  selectionFontSize: string
+  disabled: boolean
 }) {
-  const [inputValue, setInputValue] = React.useState<string>(selectionFontSize);
-  const [inputChangeFlag, setInputChangeFlag] = React.useState<boolean>(false);
+  const [editor] = useLexicalComposerContext()
+
+  const [inputValue, setInputValue] = React.useState<string>(selectionFontSize)
+  const [inputChangeFlag, setInputChangeFlag] = React.useState<boolean>(false)
 
   /**
    * Calculates the new font size based on the update type.
@@ -42,65 +43,65 @@ export default function FontSize({
    */
   const calculateNextFontSize = (
     currentFontSize: number,
-    updateType: updateFontSizeType | null,
+    updateType: updateFontSizeType | null
   ) => {
     if (!updateType) {
-      return currentFontSize;
+      return currentFontSize
     }
 
-    let updatedFontSize: number = currentFontSize;
+    let updatedFontSize: number = currentFontSize
     switch (updateType) {
       case updateFontSizeType.decrement:
         switch (true) {
           case currentFontSize > MAX_ALLOWED_FONT_SIZE:
-            updatedFontSize = MAX_ALLOWED_FONT_SIZE;
-            break;
+            updatedFontSize = MAX_ALLOWED_FONT_SIZE
+            break
           case currentFontSize >= 48:
-            updatedFontSize -= 12;
-            break;
+            updatedFontSize -= 12
+            break
           case currentFontSize >= 24:
-            updatedFontSize -= 4;
-            break;
+            updatedFontSize -= 4
+            break
           case currentFontSize >= 14:
-            updatedFontSize -= 2;
-            break;
+            updatedFontSize -= 2
+            break
           case currentFontSize >= 9:
-            updatedFontSize -= 1;
-            break;
+            updatedFontSize -= 1
+            break
           default:
-            updatedFontSize = MIN_ALLOWED_FONT_SIZE;
-            break;
+            updatedFontSize = MIN_ALLOWED_FONT_SIZE
+            break
         }
-        break;
+        break
 
       case updateFontSizeType.increment:
         switch (true) {
           case currentFontSize < MIN_ALLOWED_FONT_SIZE:
-            updatedFontSize = MIN_ALLOWED_FONT_SIZE;
-            break;
+            updatedFontSize = MIN_ALLOWED_FONT_SIZE
+            break
           case currentFontSize < 12:
-            updatedFontSize += 1;
-            break;
+            updatedFontSize += 1
+            break
           case currentFontSize < 20:
-            updatedFontSize += 2;
-            break;
+            updatedFontSize += 2
+            break
           case currentFontSize < 36:
-            updatedFontSize += 4;
-            break;
+            updatedFontSize += 4
+            break
           case currentFontSize <= 60:
-            updatedFontSize += 12;
-            break;
+            updatedFontSize += 12
+            break
           default:
-            updatedFontSize = MAX_ALLOWED_FONT_SIZE;
-            break;
+            updatedFontSize = MAX_ALLOWED_FONT_SIZE
+            break
         }
-        break;
+        break
 
       default:
-        break;
+        break
     }
-    return updatedFontSize;
-  };
+    return updatedFontSize
+  }
   /**
    * Patches the selection with the updated font size.
    */
@@ -109,81 +110,78 @@ export default function FontSize({
     (newFontSize: string | null, updateType: updateFontSizeType | null) => {
       const getNextFontSize = (prevFontSize: string | null): string => {
         if (!prevFontSize) {
-          prevFontSize = `${DEFAULT_FONT_SIZE}px`;
+          prevFontSize = `${DEFAULT_FONT_SIZE}px`
         }
-        prevFontSize = prevFontSize.slice(0, -2);
+        prevFontSize = prevFontSize.slice(0, -2)
         const nextFontSize = calculateNextFontSize(
           Number(prevFontSize),
-          updateType,
-        );
-        return `${nextFontSize}px`;
-      };
+          updateType
+        )
+        return `${nextFontSize}px`
+      }
 
       editor.update(() => {
         if (editor.isEditable()) {
-          const selection = $getSelection();
+          const selection = $getSelection()
           if (selection !== null) {
             $patchStyleText(selection, {
               'font-size': newFontSize || getNextFontSize,
-            });
+            })
           }
         }
-      });
+      })
     },
-    [editor],
-  );
+    [editor]
+  )
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    const inputValueNumber = Number(inputValue);
+    const inputValueNumber = Number(inputValue)
 
     if (['e', 'E', '+', '-'].includes(e.key) || isNaN(inputValueNumber)) {
-      e.preventDefault();
-      setInputValue('');
-      return;
+      e.preventDefault()
+      setInputValue('')
+      return
     }
-    setInputChangeFlag(true);
+    setInputChangeFlag(true)
     if (e.key === 'Enter' || e.key === 'Tab' || e.key === 'Escape') {
-      e.preventDefault();
+      e.preventDefault()
 
-      updateFontSizeByInputValue(inputValueNumber);
+      updateFontSizeByInputValue(inputValueNumber)
     }
-  };
+  }
 
   const handleInputBlur = () => {
     if (inputValue !== '' && inputChangeFlag) {
-      const inputValueNumber = Number(inputValue);
-      updateFontSizeByInputValue(inputValueNumber);
+      const inputValueNumber = Number(inputValue)
+      updateFontSizeByInputValue(inputValueNumber)
     }
-  };
+  }
 
   const handleButtonClick = (updateType: updateFontSizeType) => {
     if (inputValue !== '') {
-      const nextFontSize = calculateNextFontSize(
-        Number(inputValue),
-        updateType,
-      );
-      updateFontSizeInSelection(String(nextFontSize) + 'px', null);
+      const nextFontSize = calculateNextFontSize(Number(inputValue), updateType)
+      updateFontSizeInSelection(String(nextFontSize) + 'px', null)
     } else {
-      updateFontSizeInSelection(null, updateType);
+      updateFontSizeInSelection(null, updateType)
     }
-  };
+  }
 
   const updateFontSizeByInputValue = (inputValueNumber: number) => {
-    let updatedFontSize = inputValueNumber;
+    let updatedFontSize = inputValueNumber
     if (inputValueNumber > MAX_ALLOWED_FONT_SIZE) {
-      updatedFontSize = MAX_ALLOWED_FONT_SIZE;
+      updatedFontSize = MAX_ALLOWED_FONT_SIZE
     } else if (inputValueNumber < MIN_ALLOWED_FONT_SIZE) {
-      updatedFontSize = MIN_ALLOWED_FONT_SIZE;
+      updatedFontSize = MIN_ALLOWED_FONT_SIZE
     }
 
-    setInputValue(String(updatedFontSize));
-    updateFontSizeInSelection(String(updatedFontSize) + 'px', null);
-    setInputChangeFlag(false);
-  };
+    setInputValue(String(updatedFontSize))
+    updateFontSizeInSelection(String(updatedFontSize) + 'px', null)
+    setInputChangeFlag(false)
+  }
 
   React.useEffect(() => {
-    setInputValue(selectionFontSize);
-  }, [selectionFontSize]);
+    setInputValue(selectionFontSize)
+  }, [selectionFontSize])
 
   return (
     <>
@@ -195,7 +193,8 @@ export default function FontSize({
             Number(inputValue) <= MIN_ALLOWED_FONT_SIZE)
         }
         onClick={() => handleButtonClick(updateFontSizeType.decrement)}
-        className="toolbar-item font-decrement">
+        className="toolbar-item font-decrement"
+      >
         <i className="format minus-icon" />
       </button>
 
@@ -219,9 +218,10 @@ export default function FontSize({
             Number(inputValue) >= MAX_ALLOWED_FONT_SIZE)
         }
         onClick={() => handleButtonClick(updateFontSizeType.increment)}
-        className="toolbar-item font-increment">
+        className="toolbar-item font-increment"
+      >
         <i className="format add-icon" />
       </button>
     </>
-  );
+  )
 }

@@ -63,6 +63,7 @@ const Header: React.FC = () => {
           ❯
         </Button>
         <div className="flex-1 h-full draggable"></div>
+        <button onClick={window.electronAPI.toggleDevtools}>devtools</button>
         <ThemeToggle />
       </div>
     </header>

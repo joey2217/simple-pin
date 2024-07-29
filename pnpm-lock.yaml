@@ -8,12 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@excalidraw/excalidraw':
-        specifier: ^0.17.6
-        version: 0.17.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@lexical/clipboard':
-        specifier: ^0.16.1
-        version: 0.16.1
       '@lexical/code':
         specifier: ^0.16.1
         version: 0.16.1
@@ -29,18 +23,6 @@ importers:
       '@lexical/list':
         specifier: ^0.16.1
         version: 0.16.1
-      '@lexical/mark':
-        specifier: ^0.16.1
-        version: 0.16.1
-      '@lexical/markdown':
-        specifier: ^0.16.1
-        version: 0.16.1
-      '@lexical/overflow':
-        specifier: ^0.16.1
-        version: 0.16.1
-      '@lexical/plain-text':
-        specifier: ^0.16.1
-        version: 0.16.1
       '@lexical/react':
         specifier: ^0.16.1
         version: 0.16.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(yjs@13.6.18)
@@ -53,15 +35,9 @@ importers:
       '@lexical/table':
         specifier: ^0.16.1
         version: 0.16.1
-      '@lexical/text':
-        specifier: ^0.16.1
-        version: 0.16.1
       '@lexical/utils':
         specifier: ^0.16.1
         version: 0.16.1
-      '@lexical/yjs':
-        specifier: ^0.16.1
-        version: 0.16.1(yjs@13.6.18)
       '@radix-ui/react-dropdown-menu':
         specifier: ^2.1.1
         version: 2.1.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -80,9 +56,6 @@ importers:
       electron-updater:
         specifier: ^6.2.1
         version: 6.2.1
-      katex:
-        specifier: ^0.16.11
-        version: 0.16.11
       lexical:
         specifier: ^0.16.1
         version: 0.16.1
@@ -113,9 +86,6 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.6)
-      yjs:
-        specifier: ^13.6.18
-        version: 13.6.18
     devDependencies:
       '@types/lodash-es':
         specifier: ^4.17.12
@@ -370,12 +340,6 @@ packages:
   '@eslint/js@8.57.0':
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-
-  '@excalidraw/excalidraw@0.17.6':
-    resolution: {integrity: sha512-fyCl+zG/Z5yhHDh5Fq2ZGmphcrALmuOdtITm8gN4d8w4ntnaopTXcTfnAAaU3VleDC6LhTkoLOTG6P5kgREiIg==}
-    peerDependencies:
-      react: ^17.0.2 || ^18.2.0
-      react-dom: ^17.0.2 || ^18.2.0
 
   '@floating-ui/core@1.6.5':
     resolution: {integrity: sha512-8GrTWmoFhm5BsMZOTHeGD2/0FLKLQQHvO/ZmQga4tKempYRLz8aqJGqXVuQgisnMObq2YZ2SgkwctN1LOOxcqA==}
@@ -1367,10 +1331,6 @@ packages:
     resolution: {integrity: sha512-P0CysNDQ7rtVw4QIQtm+MRxV66vKFSvlsQvGYXZWR3qFU0jlMKHZZZgw8e+8DSah4UDKMqnknRDQz+xuQXQ/Zg==}
     engines: {node: '>= 6'}
 
-  commander@8.3.0:
-    resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==}
-    engines: {node: '>= 12'}
-
   compare-version@0.1.2:
     resolution: {integrity: sha512-pJDh5/4wrEnXX/VWRZvruAGHkzKdr46z11OlTPN+VrATlWWhSKewNCJ1futCO5C7eJB3nPMFZA1LeYtcFboZ2A==}
     engines: {node: '>=0.10.0'}
@@ -1944,10 +1904,6 @@ packages:
 
   jsonfile@6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
-
-  katex@0.16.11:
-    resolution: {integrity: sha512-RQrI8rlHY92OLf3rho/Ts8i/XvjgguEjOkO1BEXcU3N8BqPpSzBNwV/G0Ukr+P/l3ivvJUE/Fa/CwbS6HesGNQ==}
-    hasBin: true
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
@@ -3025,11 +2981,6 @@ snapshots:
       - supports-color
 
   '@eslint/js@8.57.0': {}
-
-  '@excalidraw/excalidraw@0.17.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
 
   '@floating-ui/core@1.6.5':
     dependencies:
@@ -4113,8 +4064,6 @@ snapshots:
 
   commander@5.1.0: {}
 
-  commander@8.3.0: {}
-
   compare-version@0.1.2: {}
 
   compress-commons@4.1.2:
@@ -4813,10 +4762,6 @@ snapshots:
       universalify: 2.0.1
     optionalDependencies:
       graceful-fs: 4.2.11
-
-  katex@0.16.11:
-    dependencies:
-      commander: 8.3.0
 
   keyv@4.5.4:
     dependencies:

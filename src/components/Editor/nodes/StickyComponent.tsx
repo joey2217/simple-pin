@@ -10,8 +10,6 @@ import type { LexicalEditor, NodeKey } from 'lexical'
 
 import './StickyNode.css'
 
-import { useCollaborationContext } from '@lexical/react/LexicalCollaborationContext'
-import { CollaborationPlugin } from '@lexical/react/LexicalCollaborationPlugin'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary'
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
@@ -19,14 +17,13 @@ import { LexicalNestedComposer } from '@lexical/react/LexicalNestedComposer'
 import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin'
 import { calculateZoomLevel } from '@lexical/utils'
 import { $getNodeByKey } from 'lexical'
-import * as React from 'react'
 import { useEffect, useRef } from 'react'
 import useLayoutEffect from '../utils/useLayoutEffect'
 
 import { useSharedHistoryContext } from '../context/SharedHistoryContext'
 import StickyEditorTheme from '../themes/StickyEditorTheme'
-import ContentEditable from '../ui/ContentEditable'
 import { $isStickyNode } from './StickyNode'
+import { ContentEditable } from '@lexical/react/LexicalContentEditable'
 
 type Positioning = {
   isDragging: boolean
@@ -72,7 +69,6 @@ export default function StickyComponent({
     x: 0,
     y: 0,
   })
-  const { isCollabActive } = useCollaborationContext()
 
   useEffect(() => {
     const position = positioningRef.current
@@ -159,7 +155,7 @@ export default function StickyComponent({
     }
   }
 
-  const handlePointerUp = (event: PointerEvent) => {
+  const handlePointerUp = (_event: PointerEvent) => {
     const stickyContainer = stickyContainerRef.current
     const positioning = positioningRef.current
     if (stickyContainer !== null) {
@@ -250,12 +246,11 @@ export default function StickyComponent({
             contentEditable={
               <ContentEditable
                 placeholder="What's up?"
-                placeholderClassName="StickyNode__placeholder"
                 className="StickyNode__contentEditable"
               />
             }
             ErrorBoundary={LexicalErrorBoundary}
-            placeholder={null}
+            placeholder={<div>placeholder</div>}
           />
         </LexicalNestedComposer>
       </div>
