@@ -39,6 +39,8 @@ interface IElectronAPI {
   ) => Promise<Electron.OpenDialogReturnValue>
   pin: (payload: PinPayload) => Promise<void>
   screenshot: () => Promise<void>
+  // screenshot
+  closeScreenshot: () => Promise<void>
 }
 
 type RemoveListener = () => void
@@ -51,7 +53,7 @@ interface MessageAPI {
     callback: (theme: Electron.NativeTheme['themeSource']) => void
   ) => RemoveListener
   // screenshot
-  onScreenshot: (callback: () => void) => RemoveListener
+  onScreenshot: (callback: (thumbnailURL:string) => void) => RemoveListener
 }
 
 interface Argv {

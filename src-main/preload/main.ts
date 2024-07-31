@@ -20,6 +20,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   showOpenDialog: (options: Electron.OpenDialogOptions) =>
     ipcRenderer.invoke('OPEN_DIALOG', options),
   pin: (payload: PinPayload) => ipcRenderer.invoke('PIN', payload),
+  // screenshot
   screenshot: () => ipcRenderer.invoke('SCREENSHOT'),
 })
 

@@ -1,6 +1,8 @@
 import { contextBridge, ipcRenderer } from 'electron/renderer'
 
-contextBridge.exposeInMainWorld('electronAPI', {})
+contextBridge.exposeInMainWorld('electronAPI', {
+  closeScreenshot: () => ipcRenderer.invoke('CLOSE_SCREENSHOT'),
+})
 
 function addListener(channel: string, callback: (...args: any[]) => void) {
   const listener = (_event: Electron.IpcRendererEvent, ...args: any[]) =>
@@ -10,6 +12,5 @@ function addListener(channel: string, callback: (...args: any[]) => void) {
 }
 
 contextBridge.exposeInMainWorld('messageAPI', {
-  onScreenshot: (callback: () => void) =>
-    ipcRenderer.on('SCREENSHOT', callback),
+  onScreenshot: (callback: (thumbnailURL:string ) => void) => addListener('SCREENSHOT', callback),
 })

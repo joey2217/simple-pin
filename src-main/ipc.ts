@@ -8,7 +8,7 @@ import {
   sendToAllPinWindow,
   setPinWindowSize,
 } from './windows/pin'
-import { takeScreenshot } from './windows/screenshot'
+import { closeScreenshot, takeScreenshot } from './windows/screenshot'
 
 export default function handleIPC() {
   ipcMain.handle('TOGGLE_DEVTOOLS', (event) => {
@@ -62,5 +62,9 @@ export default function handleIPC() {
   ipcMain.handle('SCREENSHOT', () => {
     hideMainWidow()
     takeScreenshot()
+  })
+
+  ipcMain.handle('CLOSE_SCREENSHOT', () => {
+    closeScreenshot()
   })
 }

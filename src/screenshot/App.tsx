@@ -1,43 +1,59 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import Screenshots from './Screenshots'
+import type { Bounds } from './Screenshots/types'
+
+const width = window.innerWidth
+const height = window.innerHeight
 
 const App: React.FC = () => {
   const [screenshot, setScreenshot] = useState('')
 
-  const videoEl = useRef<HTMLVideoElement>(null)
+  const onSave = useCallback((blob: Blob, bounds: Bounds) => {
+    console.log('save', blob, bounds)
+    console.log(URL.createObjectURL(blob))
+  }, [])
+  const onCancel = useCallback(() => {
+    console.log('cancel')
+  }, [])
+  const onOk = useCallback((blob: Blob, bounds: Bounds) => {
+    console.log('ok', blob, bounds)
+    console.log(URL.createObjectURL(blob))
+  }, [])
 
   useEffect(() => {
-    return window.messageAPI.onScreenshot(() => {
-      const video = videoEl.current
-      if (video) {
-        navigator.mediaDevices
-          .getDisplayMedia({
-            audio: false,
-            video: {
-              width: window.innerWidth,
-              height: window.innerHeight,
-              frameRate: 30,
-            },
-          })
-          .then((stream) => {
-            video.srcObject = stream
-            video.onloadedmetadata = (e) => {
-              video.play()
-              video.pause()
-            }
-          })
-          .catch((e) => console.log(e))
+    const onKeyDown = (e: KeyboardEvent) => {
+      console.log(e.key)
+      if (e.key === 'Escape') {
+        setScreenshot('')
+        window.electronAPI.closeScreenshot()
       }
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [])
+
+  useEffect(() => {
+    setScreenshot('')
+    return window.messageAPI.onScreenshot((thumbnailURL) => {
+      setScreenshot(thumbnailURL)
     })
   }, [])
-  return (
-    <div>
-      <video
-        ref={videoEl}
-        className="w-screen h-screen absolute top-0 left-0"
-        controls={false}
-      ></video>
-    </div>
-  )
+
+  if (screenshot) {
+    return (
+      <Screenshots
+        url={screenshot}
+        width={width}
+        height={height}
+        onSave={onSave}
+        onCancel={onCancel}
+        onOk={onOk}
+      />
+    )
+  }
+  return null
 }
 
 export default App

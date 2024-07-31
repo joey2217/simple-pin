@@ -5,6 +5,7 @@ import * as os from 'node:os'
 
 /** @link https://www.electronjs.org/zh/docs/latest/tutorial/devtools-extension */
 export async function loadDevTools() {
+  return
   try {
     // on windows
     const reactDevToolsDir = path.join(

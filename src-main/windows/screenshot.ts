@@ -14,7 +14,7 @@ export function createScreenshotWindow() {
     width,
     height,
     show: false,
-    titleBarStyle: 'hidden',
+    // titleBarStyle: 'hidden',
     maximizable: false,
     resizable: false,
     skipTaskbar: import.meta.env.PROD,
@@ -28,8 +28,7 @@ export function createScreenshotWindow() {
   })
 
   win.once('ready-to-show', () => {
-    win.show()
-    win.webContents.send('SCREENSHOT')
+    takeScreenshot()
     if (import.meta.env.DEV || process.argv.includes('--dev')) {
       win.webContents.openDevTools({ mode: 'bottom' })
     }
@@ -52,41 +51,35 @@ export function createScreenshotWindow() {
 export function takeScreenshot() {
   if (win === null) {
     createScreenshotWindow()
+    return
   } else {
-    win.webContents.send('SCREENSHOT')
+    win.show()
   }
-  session.defaultSession.setDisplayMediaRequestHandler((_request, callback) => {
-    desktopCapturer
-      .getSources({ types: ['screen', 'window'] })
-      .then((sources) => {
-        const cursor = screen.getCursorScreenPoint()
-        const displays = screen.getAllDisplays()
-        const currentDisplay = displays.find((d) => inArea(cursor, d))
-        if (currentDisplay) {
-          const source = sources.find(
-            (s) => Number(s.display_id) === currentDisplay.id
-          )
-          if (source) {
-            return source
-          }
-        }
-        return sources[0]
-      })
-      .then((source: Electron.DesktopCapturerSource) => {
-        callback({ video: source })
-      })
-  })
+  const { width, height } = win.getBounds()
+  desktopCapturer
+    .getSources({
+      types: ['screen'],
+      thumbnailSize: {
+        width,
+        height,
+      },
+    })
+    .then((sources) => {
+      const cursor = screen.getCursorScreenPoint()
+      const currentDisplay = screen.getDisplayNearestPoint(cursor)
+      const source = sources.find(
+        (s) => Number(s.display_id) === currentDisplay.id
+      )
+      if (source) {
+        return source
+      }
+      return sources[0]
+    })
+    .then((s) => {
+      win.webContents.send('SCREENSHOT', s.thumbnail.toDataURL())
+    })
 }
 
-function inArea(point: Electron.Point, display: Electron.Display) {
-  return (
-    point.x >= display.bounds.x &&
-    point.x <= display.bounds.x + display.bounds.width &&
-    point.y >= display.bounds.y &&
-    point.y <= display.bounds.y + display.bounds.height
-  )
-}
-
-export function beforeScreenshotQuit() {
-  quit = true
+export function closeScreenshot() {
+  win.hide()
 }
