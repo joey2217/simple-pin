@@ -1,6 +1,6 @@
-import { contextBridge, ipcRenderer } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron/renderer'
 import { version } from '../../package.json'
-import type { Theme } from '../types'
+import type { PinPayload, Theme } from '../types'
 
 /**
  * Sandboxed preload scripts can't use ESM imports
@@ -17,6 +17,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
   showItemInFolder: (fullPath: string) =>
     ipcRenderer.invoke('SHOW_ITEM_IN_FOLDER', fullPath),
   openPath: (fullPath: string) => ipcRenderer.invoke('OPEN_PATH', fullPath),
+  showOpenDialog: (options: Electron.OpenDialogOptions) =>
+    ipcRenderer.invoke('OPEN_DIALOG', options),
+  pin: (payload: PinPayload) => ipcRenderer.invoke('PIN', payload),
+  screenshot: () => ipcRenderer.invoke('SCREENSHOT'),
 })
 
 function addListener(channel: string, callback: (...args: any[]) => void) {

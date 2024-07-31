@@ -6,3 +6,5 @@ export const APP_NAME = '笔记'
 const __filename = fileURLToPath(import.meta.url)
 
 export const ROOT = path.dirname(__filename)
+
+export const DARK_BACK_COLOR = '#0c0a09'

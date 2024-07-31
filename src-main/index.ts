@@ -10,6 +10,8 @@ import {
   focus as focusMainWindow,
 } from './windows/main'
 import handleIPC from './ipc'
+import { beforeScreenshotQuit } from './windows/screenshot'
+import './menu'
 
 log.initialize()
 
@@ -46,7 +48,10 @@ app.on('activate', () => {
   }
 })
 
-app.on('before-quit', beforeQuit)
+app.on('before-quit', () => {
+  beforeQuit()
+  beforeScreenshotQuit()
+})
 
 // mac 处理协议 在本例中，我们选择显示一个错误提示对话框。
 // app.on('open-url', (event, url) => {

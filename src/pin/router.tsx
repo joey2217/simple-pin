@@ -1,6 +1,6 @@
 import { createHashRouter } from 'react-router-dom'
 import Layout from './layout'
-import Home from './pages/home'
+import ImagePage from './pages/image'
 
 const router = createHashRouter([
   {
@@ -8,8 +8,8 @@ const router = createHashRouter([
     element: <Layout />,
     children: [
       {
-        index: true,
-        element: <Home />,
+        path: 'image',
+        element: <ImagePage />,
       },
     ],
   },

@@ -1,67 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate, Location, Link } from 'react-router-dom'
-import { Button } from '@/components/ui/button'
+import React from 'react'
 import { ThemeToggle } from './ThemeSelect'
 // import icon from '../assets/icon.png'
 
-interface History {
-  length: number
-  index: number
-  location?: Location
-}
-
 const Header: React.FC = () => {
-  const location = useLocation()
-  const navigate = useNavigate()
-
-  const [historyState, setHistoryState] = useState<History>({
-    length: 0,
-    index: 0,
-    location: undefined,
-  })
-
-  useEffect(() => {
-    const {
-      length,
-      state: { idx },
-    } = window.history
-    setHistoryState({
-      length,
-      index: idx,
-      location,
-    })
-    // console.log(window.history)
-  }, [location])
-
   return (
     <header className="titleBarContainer">
-      <div className="titleBar pr-2 flex gap-2 items-center">
-        <Link
-          to="/"
-          id="logo"
-          className="border-r h-10 flex items-center gap-2 justify-center"
-        >
+      <div className="titleBar px-2 flex gap-2 items-center">
+        <div className="border-r h-10 flex items-center gap-2 justify-center">
           {/* <img src={icon} alt="logo" className="w-8 h-8" /> */}
-          <span>笔记</span>
-        </Link>
-        <Button
-          title="后退"
-          size="sm"
-          variant="outline"
-          disabled={historyState.index === 0}
-          onClick={() => navigate(-1)}
-        >
-          ❮
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          title="前进"
-          disabled={historyState.index === historyState.length - 1}
-          onClick={() => navigate(1)}
-        >
-          ❯
-        </Button>
+          <span>Pin</span>
+        </div>
         <div className="flex-1 h-full draggable"></div>
         <button onClick={window.electronAPI.toggleDevtools}>devtools</button>
         <ThemeToggle />

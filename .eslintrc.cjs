@@ -11,5 +11,8 @@ module.exports = {
   plugins: ['react-refresh'],
   rules: {
     'react-refresh/only-export-components': 'off',
+    '@typescript-eslint/no-explicit-any': {
+      ignoreRestArgs: false,
+    },
   },
 }

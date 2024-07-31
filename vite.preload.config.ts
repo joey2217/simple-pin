@@ -11,7 +11,7 @@ const NODE_VERSION = 20
 const EXTERNAL = builtinModules
   .map((bm) => `node:${bm}`)
   .concat(builtinModules)
-  .concat('electron')
+  .concat('electron', 'electron/main', 'electron/renderer', 'electron/common')
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -24,7 +24,9 @@ export default defineConfig(({ mode }) => {
       minify: mode === 'development' ? false : 'esbuild',
       rollupOptions: {
         input: {
-          preload: path.join(ROOT, '/src-main/windows/preload.ts'),
+          preload: path.join(ROOT, '/src-main/preload/main.ts'),
+          'pin-preload': path.join(ROOT, '/src-main/preload/pin.ts'),
+          'screenshot-preload': path.join(ROOT, '/src-main/preload/screenshot.ts'),
         },
         output: {
           format: 'cjs',
