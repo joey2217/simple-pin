@@ -16,7 +16,6 @@ export function create() {
     titleBarOverlay: {
       color: nativeTheme.shouldUseDarkColors ? DARK_BACK_COLOR : '#fff',
       symbolColor: nativeTheme.shouldUseDarkColors ? '#fff' : DARK_BACK_COLOR,
-      height: 40,
     },
     webPreferences: {
       preload: path.join(ROOT, 'preload.cjs'),
@@ -69,10 +68,6 @@ export function setMainTitleBarOverlay() {
 
 export function mainNavigate(to: string) {
   send('NAVIGATE', to)
-}
-
-export function musicControl(type: 'prev' | 'play' | 'pause' | 'next') {
-  return () => win.webContents.send('MUSIC_CONTROL', type)
 }
 
 export function beforeQuit() {

@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron/renderer'
 import { version } from '../../package.json'
-import type { PinPayload, Theme } from '../types'
+import type { CreatePinType, PinPayload, Theme } from '../types'
 
 /**
  * Sandboxed preload scripts can't use ESM imports
@@ -20,6 +20,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   showOpenDialog: (options: Electron.OpenDialogOptions) =>
     ipcRenderer.invoke('OPEN_DIALOG', options),
   pin: (payload: PinPayload) => ipcRenderer.invoke('PIN', payload),
+  createPin: (type: CreatePinType)=>ipcRenderer.invoke('CREATE_PIN', type),
   // screenshot
   screenshot: () => ipcRenderer.invoke('SCREENSHOT'),
 })

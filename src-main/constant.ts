@@ -1,7 +1,7 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-export const APP_NAME = '笔记'
+export const APP_NAME = 'PIN'
 
 const __filename = fileURLToPath(import.meta.url)
 

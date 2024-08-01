@@ -1,9 +1,9 @@
 import path from 'node:path'
-import { BrowserWindow, desktopCapturer, screen, session } from 'electron/main'
+import { BrowserWindow, desktopCapturer, screen } from 'electron/main'
 import { ROOT } from '../constant'
 
 let win: BrowserWindow = null!
-let quit = false
+const quit = false
 
 export function createScreenshotWindow() {
   const primaryDisplay = screen.getPrimaryDisplay()
@@ -76,7 +76,7 @@ export function takeScreenshot() {
       return sources[0]
     })
     .then((s) => {
-      win.webContents.send('SCREENSHOT', s.thumbnail.toDataURL())
+      win.webContents.send('ON_SCREENSHOT', s.thumbnail.toDataURL())
     })
 }
 

@@ -32,6 +32,20 @@ const App: React.FC = () => {
         <Button className="w-full" onClick={window.electronAPI.screenshot}>
           Pin 截图
         </Button>
+        {/* todo */}
+        <Button
+          className="w-full"
+          onClick={() => window.electronAPI.createPin('todo')}
+        >
+          Pin 待办
+        </Button>
+        {/* 便签 */}
+        <Button
+          className="w-full"
+          onClick={() => window.electronAPI.createPin('note')}
+        >
+          Pin 便签
+        </Button>
       </main>
     </>
   )

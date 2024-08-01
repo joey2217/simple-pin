@@ -12,7 +12,7 @@ function addListener(channel: string, callback: (...args: any[]) => void) {
 
 contextBridge.exposeInMainWorld('messageAPI', {
   onPin: (callback: (payload: PinPayload) => void) =>
-    addListener('PIN', callback),
+    addListener('ON_PIN', callback),
   onThemeChange: (
     callback: (theme: Electron.NativeTheme['themeSource']) => void
   ) => addListener('ON_THEME_CHANGE', callback),

@@ -47,7 +47,7 @@ const resizePoints = [
 
 export default memo(
   forwardRef<CanvasRenderingContext2D>(
-    function ScreenshotsCanvas(props, ref): ReactElement | null {
+    function ScreenshotsCanvas(_props, ref): ReactElement | null {
       const { url, image, width, height } = useStore()
 
       const emiter = useEmiter()

@@ -1,11 +1,8 @@
 import { contextBridge, ipcRenderer } from 'electron/renderer'
+import type { CreatePinType, Theme } from '../types'
 
 contextBridge.exposeInMainWorld('electronAPI', {
-  closeScreenshot: () => ipcRenderer.invoke('CLOSE_SCREENSHOT'),
-  saveScreenshot: (arrayBuffer: ArrayBuffer) =>
-    ipcRenderer.invoke('SAVE_SCREENSHOT', arrayBuffer),
-  pinScreenshot: (arrayBuffer: ArrayBuffer) =>
-    ipcRenderer.invoke('PIN_SCREENSHOT', arrayBuffer),
+  setTheme: (theme: Theme) => ipcRenderer.invoke('SET_THEME', theme),
 })
 
 function addListener(channel: string, callback: (...args: any[]) => void) {
@@ -16,6 +13,6 @@ function addListener(channel: string, callback: (...args: any[]) => void) {
 }
 
 contextBridge.exposeInMainWorld('messageAPI', {
-  onScreenshot: (callback: (thumbnailURL: string) => void) =>
-    addListener('ON_SCREENSHOT', callback),
+  onCreatePin: (callback: (type: CreatePinType) => void) =>
+    addListener('ON_CREATE_PIN', callback),
 })

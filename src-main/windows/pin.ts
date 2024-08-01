@@ -20,7 +20,6 @@ export function createPinWindow(payload: PinPayload) {
     titleBarOverlay: {
       color: nativeTheme.shouldUseDarkColors ? DARK_BACK_COLOR : '#fff',
       symbolColor: nativeTheme.shouldUseDarkColors ? '#fff' : DARK_BACK_COLOR,
-      height: 40,
     },
     webPreferences: {
       preload: path.join(ROOT, 'pin-preload.cjs'),
@@ -31,11 +30,15 @@ export function createPinWindow(payload: PinPayload) {
   count += 1
   payload.id = count
   win.once('ready-to-show', () => {
-    win.webContents.send('PIN', payload)
+    win.webContents.send('ON_PIN', payload)
     win.show()
     if (import.meta.env.DEV || process.argv.includes('--dev')) {
       win.webContents.openDevTools({ mode: 'bottom' })
     }
+  })
+
+  win.once('closed', () => {
+    map.delete(count)
   })
 
   if (import.meta.env.DEV) {

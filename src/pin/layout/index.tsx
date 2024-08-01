@@ -10,19 +10,22 @@ const Layout: React.FC = () => {
 
   useEffect(() => {
     return window.messageAPI.onPin((payload) => {
-      console.log('omPin', payload)
       switch (payload.type) {
         case 'image':
           navigate('/image', {
             state: payload,
           })
           break
-
+        case 'screenshot':
+          navigate('/screenshot', {
+            state: payload,
+          })
+          break
         default:
           break
       }
     })
-  }, [])
+  }, [navigate])
 
   return (
     <>

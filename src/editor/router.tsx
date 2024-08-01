@@ -1,7 +1,6 @@
 import { createHashRouter } from 'react-router-dom'
 import Layout from './layout'
-import ImagePage from './pages/image'
-import ScreenshotPage from './pages/screenshot'
+import TodoPage from './pages/todo'
 
 const router = createHashRouter([
   {
@@ -9,12 +8,8 @@ const router = createHashRouter([
     element: <Layout />,
     children: [
       {
-        path: 'image',
-        element: <ImagePage />,
-      },
-      {
-        path: 'screenshot',
-        element: <ScreenshotPage />,
+        path: '/todo',
+        element: <TodoPage />,
       },
     ],
   },

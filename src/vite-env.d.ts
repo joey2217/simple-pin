@@ -1,6 +1,7 @@
 /// <reference types="vite/client" />
 import Electron from 'electron'
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface ImportMetaEnv {
   // readonly VITE_APP_TITLE: string
 }
@@ -13,18 +14,23 @@ type DownloadStatus = 'init' | 'downloading' | 'completed' | 'failed'
 
 type Theme = Electron.NativeTheme['themeSource']
 
-export type PinType = 'image'
-
 interface PinBasePayload {
-  type: PinType
   id: number
 }
 
-interface PinImagePayload extends PinBasePayload {
+export interface PinImagePayload extends PinBasePayload {
+  type: 'image'
   filePath: string
 }
 
-type PinPayload = PinImagePayload
+export interface PinScreenshotPayload extends PinBasePayload {
+  type: 'screenshot'
+  url: string
+}
+
+export type PinPayload = PinImagePayload | PinScreenshotPayload
+
+export type CreatePinType = 'todo' | 'note'
 
 interface IElectronAPI {
   // main
@@ -39,8 +45,12 @@ interface IElectronAPI {
   ) => Promise<Electron.OpenDialogReturnValue>
   pin: (payload: PinPayload) => Promise<void>
   screenshot: () => Promise<void>
+  createPin: (type: CreatePinType) => Promise<void>
   // screenshot
   closeScreenshot: () => Promise<void>
+  saveScreenshot: (arrayBuffer: ArrayBuffer) => Promise<void>
+  pinScreenshot: (arrayBuffer: ArrayBuffer) => Promise<void>
+  // editor
 }
 
 type RemoveListener = () => void
@@ -53,7 +63,9 @@ interface MessageAPI {
     callback: (theme: Electron.NativeTheme['themeSource']) => void
   ) => RemoveListener
   // screenshot
-  onScreenshot: (callback: (thumbnailURL:string) => void) => RemoveListener
+  onScreenshot: (callback: (thumbnailURL: string) => void) => RemoveListener
+  // editor
+  onCreatePin: (callback: (type: CreatePinType) => void) => RemoveListener
 }
 
 interface Argv {

@@ -1,16 +1,21 @@
-export type Theme = 'system' | 'light' | 'dark'
+export type Theme = Electron.NativeTheme['themeSource']
 
 export type UpdateType = 'auto' | 'hint' | 'manual'
 
-export type PinType = 'image'
-
 interface PinBasePayload {
-  type: PinType
   id: number
 }
 
 export interface PinImagePayload extends PinBasePayload {
+  type: 'image'
   filePath: string
 }
 
-export type PinPayload = PinImagePayload
+export interface PinScreenshotPayload extends PinBasePayload {
+  type: 'screenshot'
+  url: string
+}
+
+export type PinPayload = PinImagePayload | PinScreenshotPayload
+
+export type CreatePinType = 'todo' | 'note'

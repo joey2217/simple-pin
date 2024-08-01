@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Screenshots from './Screenshots'
 import type { Bounds } from './Screenshots/types'
 
@@ -8,16 +8,21 @@ const height = window.innerHeight
 const App: React.FC = () => {
   const [screenshot, setScreenshot] = useState('')
 
-  const onSave = useCallback((blob: Blob, bounds: Bounds) => {
-    console.log('save', blob, bounds)
-    console.log(URL.createObjectURL(blob))
+  const onSave = useCallback((blob: Blob, _bounds: Bounds) => {
+    blob.arrayBuffer().then((arrayBuffer) => {
+      window.electronAPI.saveScreenshot(arrayBuffer)
+    })
   }, [])
+
   const onCancel = useCallback(() => {
-    console.log('cancel')
+    setScreenshot('')
+    window.electronAPI.closeScreenshot()
   }, [])
-  const onOk = useCallback((blob: Blob, bounds: Bounds) => {
-    console.log('ok', blob, bounds)
-    console.log(URL.createObjectURL(blob))
+
+  const onOk = useCallback((blob: Blob, _bounds: Bounds) => {
+    blob.arrayBuffer().then((arrayBuffer) => {
+      window.electronAPI.pinScreenshot(arrayBuffer)
+    })
   }, [])
 
   useEffect(() => {
